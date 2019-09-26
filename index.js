@@ -38,15 +38,15 @@
         }
 
         append(data) {
-            let data = this.data;
+            let dataString = this.data;
 
-            if (data.length !== 0 && data[data.length - 1] !== "\n") {
+            if (dataString.length !== 0 && dataString[dataString.length - 1] !== "\n") {
                 // Not first item of current line
-                data += ";";
+                dataString += ";";
             }
 
-            data += escapeCell(data);
-            dataMap.set(this, data);
+            dataString += escapeCell(data);
+            dataMap.set(this, dataString);
         }
 
         newLine() {
