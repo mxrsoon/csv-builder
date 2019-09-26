@@ -37,15 +37,18 @@
             return dataMap.get(this);
         }
 
-        append(data) {
+        append(...data) {
             let dataString = this.data;
 
-            if (dataString.length !== 0 && dataString[dataString.length - 1] !== "\n") {
-                // Not first item of current line
-                dataString += ";";
+            for (let item of data) {
+                if (dataString.length !== 0 && dataString[dataString.length - 1] !== "\n") {
+                    // Not first item of current line
+                    dataString += ";";
+                }
+
+                dataString += escapeCell(item);
             }
 
-            dataString += escapeCell(data);
             dataMap.set(this, dataString);
         }
 
