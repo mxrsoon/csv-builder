@@ -52,6 +52,22 @@
             dataMap.set(this, dataString);
         }
 
+        appendLine(data = []) {
+            if (!Array.isArray(data)) {
+                data = [data];
+            }
+            
+            const dataString = this.data;
+            
+            if (dataString.length !== 0 && dataString[dataString.length - 1] !== "\n") {
+                // Not on empty line
+                this.newLine();
+            }
+
+            this.append(...data);
+            this.newLine();
+        }
+
         newLine() {
             dataMap.set(this, this.data + "\n");
         }
