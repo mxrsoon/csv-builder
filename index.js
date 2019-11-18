@@ -25,17 +25,24 @@
             // Convert to string and replace decimal separator
             return String(data).replace(/\./g, options.decimalSeparator);
         } else {
-            // Convert to string and escape quotes
-            data = String(typeof(data) === "undefined" ? "" : data).replace(/\"/g, `""`);
+            // Convert to string and double-escape double-quotes
+            data = String(typeof(data) === "undefined" ? "" : data).replace(/\"/g, `""""`);
 
             // Apply character limit subtracted by cell-escaping characters length (except outer quotes)
             if (data.length > options.charLimit - 5) {
                 data = data.substr(0, options.charLimit - 5);
 
-                // Check if broke quotes escape sequence
-                if (data[data.length - 1] === '"' && data[data.length - 2] !== '"') {
+                // Check if broke double-quote escape sequence
+                if (data[data.length - 1] === '"' && (data[data.length - 2] !== '"' || data[data.length - 3] !== '"' || data[data.length - 4] !== '"')) {
+                    let count = 0;
+                    
+                    // Count double-quote characters
+                    while (data[data.length - 1 - count] === '"') {
+                        count++;
+                    }
+                    
                     // Remove broken escape sequence
-                    data = data.substr(0, data.length - 1);
+                    data = data.substr(0, data.length - count);
                 }
             }
 
