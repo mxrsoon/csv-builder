@@ -20,7 +20,7 @@
         if (typeof(data) === "number") {
             output = String(data).replace(/\./g, ",");
         } else {
-            output = `"${String(typeof(data) === "undefined" ? "" : data).replace(/\"/g, `""`)}"`;
+            output = `"=""${String(typeof(data) === "undefined" ? "" : data).replace(/\"/g, `""`)}"""`;
         }
 
         return output;
