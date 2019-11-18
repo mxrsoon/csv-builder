@@ -14,16 +14,34 @@
         root.CSVBuilder = factory();
   }
 }(typeof self !== 'undefined' ? self : this, function () {
-    function escapeCell(data) {
-        var output = "";
+    function escapeCell(data, options) {
+        // Default options
+        options = Object.assign({
+            charLimit: 249,
+            decimalSeparator: ","
+        }, options);
 
         if (typeof(data) === "number") {
-            output = String(data).replace(/\./g, ",");
+            // Convert to string and replace decimal separator
+            return String(data).replace(/\./g, options.decimalSeparator);
         } else {
-            output = `"=""${String(typeof(data) === "undefined" ? "" : data).replace(/\"/g, `""`)}"""`;
-        }
+            // Convert to string and escape quotes
+            data = String(typeof(data) === "undefined" ? "" : data).replace(/\"/g, `""`);
 
-        return output;
+            // Apply character limit subtracted by cell-escaping characters length (except outer quotes)
+            if (data.length > options.charLimit - 5) {
+                data = data.substr(0, options.charLimit - 5);
+
+                // Check if broke quotes escape sequence
+                if (data[data.length - 1] === '"' && data[data.length - 2] !== '"') {
+                    // Remove broken escape sequence
+                    data = data.substr(0, data.length - 1);
+                }
+            }
+
+            // Apply escaping characters and force parsing as string
+            return `"=""${data}"""`;
+        }
     }
 
     const dataMap = new WeakMap();
