@@ -1,16 +1,14 @@
 {
   "name": "csv-builder",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/wazybr/csv-builder.git"
   },
-  "author": "Wazy",
+  "author": "wazybr",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/wazybr/csv-builder/issues"
